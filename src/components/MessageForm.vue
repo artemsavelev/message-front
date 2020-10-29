@@ -1,21 +1,20 @@
 <template>
   <div>
-    <div>
+    <div class="one">
+      <p>Добавление одной записи</p>
       <input class="input-message" v-model="message" placeholder="Введите сообщение"/>
       <button class="button-message" v-on:click="save">
         Сохранить
       </button>
     </div>
     <br/>
-    <div>
-      <p>Введите необходимое количество сообщений</p>
-      <p></p>
-      <input class="input-message" v-model="max" placeholder="Введите количество"/>
-      <br/>
-      <br/>
-      <p>Введите шаблон сообщений</p>
+    <div class="array">
+      <p>Добавление массива соосбщений</p>
+      <p>1. Введите необходимое количество сообщений</p>
+      <p>2. Введите шаблон сообщений</p>
+      <input class="input-message input-message2" v-model="max" placeholder="Введите количество"/>
+
       <input class="input-message" v-model="messageTemp" placeholder="Шаблон сообщений"/>
-      <br/>
       <button class="button-message button-message-width" v-on:click="saveAll">
         Сохранение массива сообщений
       </button>
@@ -38,7 +37,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['addMessage', 'addAllMessage']),
+    ...mapActions(['addMessage', 'addArrayMessage']),
     save() {
       //
       const message = {
@@ -58,13 +57,39 @@ export default {
       }
       // array.forEach(el => console.log(el))
       console.log(array.length)
-      this.addAllMessage(array)
+      this.addArrayMessage(array)
     }
   }
 }
 </script>
 
 <style scoped>
+input:focus {
+  outline: none;
+  border: 1px solid blue;
+}
+button:focus {
+  outline: none;
+}
+button:hover {
+  background-color: #64B5F6;
+}
+
+.one {
+  border: 1px dashed gray;
+  margin-right: 10em;
+  margin-left: 10em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+.array {
+  border: 1px dashed gray;
+  margin-right: 10em;
+  margin-left: 10em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
 .input-message {
   margin: 5px;
   padding: 10px;
@@ -87,7 +112,7 @@ export default {
 }
 
 .button-message-width {
-  width: 400px;
+  /*width: 400px;*/
 }
 
 </style>

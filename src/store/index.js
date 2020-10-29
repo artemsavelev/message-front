@@ -5,6 +5,7 @@ import req from './headers';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // обозначаем массив, стейт который передается во VUE компонент
   state: {
     message: []
   },
@@ -21,7 +22,7 @@ export default new Vuex.Store({
       // console.log(state.message);
     },
 
-    addAllMessageMutations(state, message) {
+    addArrayMessageMutations(state, message) {
       state.message = message;
       // console.log(state.message);
     }
@@ -35,6 +36,7 @@ export default new Vuex.Store({
       commit('updateMessageMutations', messages);
     },
 
+    // метод для добавления одной записи
     async addMessage({commit, state}, message) {
       const data = await req.responseData('http://192.168.88.2:8080/message/add-one', 'POST', message);
       const messages = await data.json();
@@ -44,13 +46,14 @@ export default new Vuex.Store({
       commit('addMessageMutations', messages)
     },
 
-    async addAllMessage({commit, state}, message) {
+    // метод для добавления массива записей
+    async addArrayMessage({commit, state}, message) {
       const data = await req.responseData('http://192.168.88.2:8080/message/add-all', 'POST', message);
       const messages = await data.json();
       //const index = state.message.findIndex(item => item.id === message.id);
       //console.log(messages);
       //console.log(index);
-      commit('addAllMessageMutations', messages)
+      commit('addArrayMessageMutations', messages)
     }
   },
   getters: {

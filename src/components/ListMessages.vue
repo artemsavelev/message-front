@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="message" v-for="message in messages" :key="message.id">
-      <p>{{ message.id }}</p>
-      <p>{{ message.message }}</p>
-      <p>{{ message.createdDate }}</p>
+      <p>id: {{ message.id }}</p>
+      <p>text message: {{ message.message }}</p>
+      <p>date added message: {{ message.createdDate }}</p>
     </div>
   </div>
 </template>
