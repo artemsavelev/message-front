@@ -1,13 +1,28 @@
 <template>
-$END$
+  <div>
+    <div class="message" v-for="message in messages" :key="message.id">
+      <p>{{ message.id }}</p>
+      <p>{{ message.message }}</p>
+      <p>{{ message.createdDate }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
+
 export default {
-name: "ListMessages"
+  name: "ListMessages",
+  props: ['messages'],
+
 }
 </script>
 
 <style scoped>
-
+.message {
+  border: 1px solid #ccc;
+  margin-top: 1em;
+  margin-left: 10em;
+  margin-right: 10em;
+  padding: 5px;
+}
 </style>

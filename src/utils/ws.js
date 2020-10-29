@@ -9,15 +9,15 @@ export function connect() {
     stompClient = Stomp.over(socket)
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        console.log(frame)
+        console.log('Connected: ' + frame)
         stompClient.subscribe('http://192.168.88.2:8080/topic/activity', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
-            console.log('ws:' + message.body)
         })
     })
 }
 
 export function addHandler(handler) {
+    console.log(handlers)
     handlers.push(handler)
 }
 
@@ -29,5 +29,10 @@ export function disconnect() {
 }
 
 export function sendMessage(message) {
-    stompClient.send("/app/message", {}, JSON.stringify(message))
+    // console.log(message)
+    // console.log(stompClient.send("http://192.168.88.2:8080/app/hello", {}, JSON.stringify(message)))
+
+    //stompClient.send("http://192.168.88.2:8080/app/hello", {}, JSON.stringify(message))
+
+
 }

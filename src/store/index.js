@@ -18,7 +18,12 @@ export default new Vuex.Store({
         ...state.message,
         message
       ];
-      console.log(state.message);
+      // console.log(state.message);
+    },
+
+    addAllMessageMutations(state, message) {
+      state.message = message;
+      // console.log(state.message);
     }
 
   },
@@ -37,6 +42,15 @@ export default new Vuex.Store({
       // console.log(messages);
       //console.log(index);
       commit('addMessageMutations', messages)
+    },
+
+    async addAllMessage({commit, state}, message) {
+      const data = await req.responseData('http://192.168.88.2:8080/message/add-all', 'POST', message);
+      const messages = await data.json();
+      //const index = state.message.findIndex(item => item.id === message.id);
+      //console.log(messages);
+      //console.log(index);
+      commit('addAllMessageMutations', messages)
     }
   },
   getters: {

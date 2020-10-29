@@ -19,11 +19,15 @@ export default {
   },
 
   // created() {
-  //   addHandler(data => {
-  //     this.addMessageMutations(data.body)
-  //       }
   //
+  //
+  //   addHandler(data => {
+  //
+  //         this.addMessageMutations(data.body)
+  //       }
   //   )
+  //
+  //
   // }
 
 

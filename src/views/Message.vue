@@ -1,38 +1,44 @@
 <template>
   <div>
     <MessageForm/>
-    <div class="message" v-for="message in allMessage" :key="message.id">
-      <p>{{ message.id }}</p>
-      <p>{{ message.message }}</p>
-      <p>{{ message.createdDate }}</p>
-    </div>
+    <Loader v-if="loading"/>
+    <ListMessages v-else-if="allMessage.length"
+                  v-bind:messages="allMessage"/>
+
+    <p v-else>No messages</p>
   </div>
 </template>
 
 <script>
 
-import {mapGetters, mapActions} from 'vuex'
 import MessageForm from "@/components/MessageForm";
+import Loader from "@/components/Loader";
+import ListMessages from "@/components/ListMessages";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'Message',
-  components: {MessageForm},
+  components: { MessageForm, Loader, ListMessages },
   comments: {
     MessageForm
   },
+  data() {
+    return {
+      messages: [],
+      loading: true
+    }
+  },
   computed: mapGetters(['allMessage']),
   methods: mapActions(['fetchMessage']),
-  mounted() {
-    this.fetchMessage();
+  async mounted() {
+    await this.fetchMessage()
+      this.loading = false;
   },
+
 }
 </script>
 <style>
 
-.message {
-  border: 1px solid #ccc;
-  margin-top: 1em;
-  padding: 5px;
-}
+
 
 </style>
