@@ -1,118 +1,92 @@
 <template>
-  <div>
-    <div class="one">
-      <p>Добавление одной записи</p>
-      <input class="input-message" v-model="message" placeholder="Введите сообщение"/>
-      <button class="button-message" v-on:click="save">
-        Сохранить
-      </button>
-    </div>
-    <br/>
-    <div class="array">
-      <p>Добавление массива соосбщений</p>
-      <p>1. Введите необходимое количество сообщений</p>
-      <p>2. Введите шаблон сообщений</p>
-      <input class="input-message input-message2" v-model="max" placeholder="Введите количество"/>
 
-      <input class="input-message" v-model="messageTemp" placeholder="Шаблон сообщений"/>
-      <button class="button-message button-message-width" v-on:click="saveAll">
-        Сохранение массива сообщений
-      </button>
-    </div>
-  </div>
+  <v-dialog v-model="dialog" scrollable width="40%">
+
+    <template v-slot:activator="{ on }" class="mt-10">
+      <v-btn dark v-on="on" text tile>add message</v-btn>
+    </template>
+    <v-card>
+
+      <v-card-title class="headline grey lighten-2">
+        <span class="header-modal ml-3">Добавление сообщений</span>
+      </v-card-title>
+
+      <v-card-text>
+        <v-container>
+
+          <v-row>
+            <v-col cols="12" sm="12" md="12">
+              <p>1. Введите необходимое количество сообщений</p>
+              <p>2. Введите шаблон сообщений</p>
+
+                <v-text-field dense
+                              v-model="max"
+                              label="Количество сообщений">
+                </v-text-field>
+                <v-text-field dense
+                              v-model="message"
+                              label="Шаблон сообщений">
+                </v-text-field>
+            </v-col>
+          </v-row>
+
+        </v-container>
+        <v-card-actions>
+          <v-btn v-on:click="save" color="primary" class="mr-2" tile>Сохранение сообщений</v-btn>
+        </v-card-actions>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+
 </template>
 
 <script>
 import {mapActions} from "vuex";
-import {addHandler} from "@/utils/ws";
+import {sendMessage} from "@/utils/ws";
 
 export default {
   name: "MessageForm",
   data() {
     return {
+      dialog: false,
       message: '',
-      messageTemp: '',
-      max: 0
+      max: null,
     }
   },
 
   methods: {
-    ...mapActions(['addMessage', 'addArrayMessage']),
+    ...mapActions(['addMessage']),
+
     save() {
-      //
-      const message = {
-        message: this.message,
-      };
-      this.addMessage(message);
-      addHandler(message)
-      this.message = '';
-      // console.log('MessageForm: ' + message.message)
 
-    },
-    saveAll() {
-      let array = [];
+      if (this.max !== null || this.message !== '') {
 
-      for (let i = 0; i < this.max; i++) {
-        array.push({message: this.messageTemp + ' ' + Math.floor(Math.random() * i)})
+        let array = []; //массив
+        let size = 300; //размер подмассива
+
+        for (let i = 0; i < this.max; i++) {
+          array.push({message: this.message + ' ' + Math.floor(Math.random() * 1000)})
+        }
+
+        //нужен для разбиения больших массивов на подмассивы
+        for (let i = 0; i < Math.ceil(array.length / size); i++) {
+          sendMessage(array.slice((i * size), (i * size) + size))
+        }
+
       }
-      // array.forEach(el => console.log(el))
-      console.log(array.length)
-      this.addArrayMessage(array)
+
+      this.snackbar = true
+      this.dialog = false
+      this.message = ''
+      this.max = ''
     }
   }
 }
 </script>
 
-<style scoped>
-input:focus {
-  outline: none;
-  border: 1px solid blue;
-}
-button:focus {
-  outline: none;
-}
-button:hover {
-  background-color: #64B5F6;
-}
+<style lang="scss">
+.main {
 
-.one {
-  border: 1px dashed gray;
-  margin-right: 10em;
-  margin-left: 10em;
-  padding-bottom: 1em;
-  padding-top: 1em;
-}
-.array {
-  border: 1px dashed gray;
-  margin-right: 10em;
-  margin-left: 10em;
-  padding-bottom: 1em;
-  padding-top: 1em;
-}
-
-.input-message {
-  margin: 5px;
-  padding: 10px;
-  width: 400px;
-  border: 1px solid #ccc;
-}
-
-.input-message2 {
-  width: 150px;
-}
-
-.input-message:before {
-  border: 1px solid red;
-}
-.button-message {
-  margin: 5px;
-  padding: 10px;
-  border: 1px solid black;
-
-}
-
-.button-message-width {
-  /*width: 400px;*/
 }
 
 </style>

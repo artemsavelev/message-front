@@ -1,34 +1,25 @@
 <template>
-    <div id="app">
-      <div id="nav">
-        <router-link to="/">Message</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
-      <router-view/>
-    </div>
+  <v-app>
+    <router-view/>
+    <NavBar/>
+  </v-app>
 </template>
 
 <script>
 import { addHandler } from './utils/ws'
 import {mapMutations} from "vuex";
+import NavBar from "@/components/NavBar";
 
 export default {
+  components: {NavBar},
+  methods: mapMutations(['addMessageMutations']),
 
-  methods: {
-    ...mapMutations(['addMessageMutations'])
-  },
-
-  // created() {
-  //
-  //
-  //   addHandler(data => {
-  //
-  //         this.addMessageMutations(data.body)
-  //       }
-  //   )
-  //
-  //
-  // }
+  created() {
+    addHandler(data => {
+      // console.log(data.body)
+      this.addMessageMutations(data.body)
+    })
+  }
 
 
 }

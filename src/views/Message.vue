@@ -1,11 +1,19 @@
 <template>
   <div>
     <MessageForm/>
-    <Loader v-if="loading"/>
+    <v-progress-circular
+        v-if="loading"
+        :size="70"
+        :width="7"
+        color="primary"
+        indeterminate
+        class="ma-16">
+    </v-progress-circular>
     <ListMessages v-else-if="allMessage.length"
                   v-bind:messages="allMessage"/>
 
-    <p v-else>No messages</p>
+    <p v-else class="ma-16">No messages</p>
+
   </div>
 </template>
 
@@ -30,17 +38,16 @@ export default {
   },
   computed: mapGetters(['allMessage']),
   methods: mapActions(['fetchMessage']),
-  async mounted() {
-    await this.fetchMessage()
-      this.loading = false;
+  mounted() {
+    this.fetchMessage().then(() => {
+      this.loading = false
+    })
   },
 
 }
 </script>
 <style scoped>
-p {
-  margin: 4em;
-}
+
 
 
 </style>
