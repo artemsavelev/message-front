@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="message" v-for="message in messages" :key="message.id">
-      <p>id: {{ message.id }}</p>
+    <div class="message" v-for="(message, idx) in messages" :key="idx">
+      <p>id: {{ idx + 1 }}</p>
       <p>text message: {{ message.message }}</p>
       <p>date added message: {{ message.createdDate }}</p>
     </div>

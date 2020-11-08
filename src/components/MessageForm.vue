@@ -49,6 +49,8 @@ export default {
   data() {
     return {
       dialog: false,
+      id: Number,
+      created_date: '',
       message: '',
       max: null,
     }
@@ -61,21 +63,25 @@ export default {
 
       if (this.max !== null || this.message !== '') {
 
-        let array = []; //массив
-        let size = 300; //размер подмассива
+        let array = []; // массив сообщений
+        let size = 300; // размер подмассива
 
         for (let i = 0; i < this.max; i++) {
-          array.push({message: this.message + ' ' + Math.floor(Math.random() * 1000)})
+          array.push({
+            id:  Math.floor(Math.random() * 1000),
+            message: this.message + ' ' + Math.floor(Math.random() * 1000),
+            // created_date: new Date().toISOString().substr(0, 22)
+          })
         }
 
-        //нужен для разбиения больших массивов на подмассивы
+        // нужен для разбиения больших массивов на подмассивы
         for (let i = 0; i < Math.ceil(array.length / size); i++) {
           sendMessage(array.slice((i * size), (i * size) + size))
         }
+        // console.log(new Date().toISOString().substr(0, 22))
 
       }
 
-      this.snackbar = true
       this.dialog = false
       this.message = ''
       this.max = ''
@@ -85,8 +91,5 @@ export default {
 </script>
 
 <style lang="scss">
-.main {
-
-}
 
 </style>

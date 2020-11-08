@@ -9,7 +9,6 @@ export function connect() {
     stompClient = Stomp.over(socket)
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        //console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/messages', message => {
             handlers.forEach(handler => handler(JSON.parse(message.body)))
         })
