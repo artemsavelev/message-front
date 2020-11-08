@@ -69,8 +69,7 @@ export default {
         for (let i = 0; i < this.max; i++) {
           array.push({
             id:  Math.floor(Math.random() * 1000),
-            message: this.message + ' ' + Math.floor(Math.random() * 1000),
-            // created_date: new Date().toISOString().substr(0, 22)
+            message: this.message + ' ' + Math.floor(Math.random() * 1000)
           })
         }
 
