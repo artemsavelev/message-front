@@ -77,8 +77,6 @@ export default {
         for (let i = 0; i < Math.ceil(array.length / size); i++) {
           sendMessage(array.slice((i * size), (i * size) + size))
         }
-        // console.log(new Date().toISOString().substr(0, 22))
-
       }
 
       this.dialog = false
