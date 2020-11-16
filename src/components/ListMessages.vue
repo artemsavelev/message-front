@@ -3,7 +3,10 @@
     <div class="message" v-for="(message, idx) in messages" :key="idx">
       <p>id: {{ idx + 1 }}</p>
       <p>text message: {{ message.message }}</p>
-      <p v-if="message.createdDate === null">date added message: {{ new Date().toISOString().substr(0, 10) + ' ' + new Date().getHours() +':' + new Date().getMinutes() + ':' + new Date().getSeconds() }}</p>
+      <p v-if="message.createdDate === null">
+        date added message:
+        {{ new Date().toISOString().substr(0, 10) + ' ' + new Date().toTimeString().substr(0, 8) }}
+      </p>
       <p v-else>date added message: {{ message.createdDate }}</p>
     </div>
   </div>
