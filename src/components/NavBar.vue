@@ -14,8 +14,7 @@ export default {
 name: "NavBar",
   components: {MessageForm},
   data: () => ({
-    // snackbar: false,
-    // message: `Hello, I'm a snackbar`,
+
   }),
   methods: {
     message() {

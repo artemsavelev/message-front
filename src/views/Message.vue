@@ -1,6 +1,7 @@
 <template>
   <div>
     <MessageForm/>
+    <!--  лоадер, появляется при ожидании данных  -->
     <v-progress-circular
         v-if="loading"
         :size="70"
@@ -38,6 +39,7 @@ export default {
   },
   computed: mapGetters(['allMessage']),
   methods: mapActions(['fetchMessage']),
+  // получаем данные после отображения всех представлений
   mounted() {
     this.fetchMessage().then(() => {
       this.loading = false

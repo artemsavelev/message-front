@@ -1,5 +1,5 @@
 <template>
-
+  <!-- модальное окно для добавления записи -->
   <v-dialog v-model="dialog" scrollable width="40%">
 
     <template v-slot:activator="{ on }" class="mt-10">
@@ -57,8 +57,10 @@ export default {
   },
 
   methods: {
+    // данные (массив сообщений) с бекэнда
     ...mapActions(['addMessage']),
 
+    // метод сохранения записей
     save() {
 
       if (this.max !== null || this.message !== '') {
@@ -66,19 +68,21 @@ export default {
         let array = []; // массив сообщений
         let size = 300; // размер подмассива
 
+        // создаем массив объектов, в теле которого текст сообщения
         for (let i = 0; i < this.max; i++) {
           array.push({
-            id:  Math.floor(Math.random() * 1000),
             message: this.message + ' ' + Math.floor(Math.random() * 1000)
           })
         }
 
         // нужен для разбиения больших массивов на подмассивы
         for (let i = 0; i < Math.ceil(array.length / size); i++) {
+          // отправка сообщений через websocket
           sendMessage(array.slice((i * size), (i * size) + size))
         }
       }
 
+      // очищаем поля и закрываем модальное окно после добавления записей
       this.dialog = false
       this.message = ''
       this.max = ''

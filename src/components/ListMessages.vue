@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--  итерация по массиву сообщений   -->
     <div class="message" v-for="(message, idx) in messages" :key="idx">
       <p>id: {{ idx + 1 }}</p>
       <p>text message: {{ message.message }}</p>
@@ -16,12 +17,7 @@
 
 export default {
   name: "ListMessages",
-  props: ['messages'],
-  date() {
-    return {
-    }
-  }
-
+  props: ['messages']
 }
 </script>
 

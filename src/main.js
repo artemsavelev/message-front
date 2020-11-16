@@ -10,6 +10,7 @@ import Vuetify from "vuetify";
 Vue.config.productionTip = false
 Vue.use(Vuetify);
 
+// вызываем функцию коннекта по websocket
 connect();
 
 new Vue({
